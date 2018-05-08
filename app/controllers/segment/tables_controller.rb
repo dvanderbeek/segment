@@ -1,21 +1,21 @@
 module Segment
-  class TablesController < ::Admin::BaseController
+  class TablesController < Segment.configuration.base_controller.safe_constantize
     before_action :set_table
 
     def create
       @table = Table.new(model: params[:model])
       @table.save
-      redirect_to [main_app, :admin, @table.model_klass, view: @table.id], notice: "Table created successfully."
+      redirect_to [main_app, Segment.configuration.routing_namespace, @table.model_klass, view: @table.id], notice: "Table created successfully."
     end
 
     def update
       @table.update(permitted_params)
-      redirect_to [main_app, :admin, @table.model_klass, view: @table.id], notice: "Table updated successfully."
+      redirect_to [main_app, Segment.configuration.routing_namespace, @table.model_klass, view: @table.id], notice: "Table updated successfully."
     end
 
     def destroy
       @table.destroy
-      redirect_to [main_app, :admin, @table.model_klass], notice: "Table deleted successfully."
+      redirect_to [main_app, Segment.configuration.routing_namespace, @table.model_klass, view: nil], notice: "Table deleted successfully."
     end
 
     private
