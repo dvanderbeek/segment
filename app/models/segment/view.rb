@@ -27,6 +27,7 @@ module Segment
     def query
       @query ||= filters.pluck(:condition, :value).inject({}) do |h, filter|
         condition, value = filter[0], filter[1]
+        value = value.split(", ") if condition.ends_with?("_in") || condition.ends_with("_any") || condition.ends_with("_all")
         h[condition] = value
         h
       end
