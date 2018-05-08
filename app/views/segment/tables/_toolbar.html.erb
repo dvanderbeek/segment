@@ -24,13 +24,13 @@
           <%= f.input :combinator, label: false, input_html: { class: "form-control-sm" }, as: :select, collection: Segment::View::COMBINATORS, include_blank: false %>
           <div id="filters">
             <%= f.simple_fields_for :filters do |filter| %>
-              <%= render "filter_fields", f: filter %>
+              <%= render "segment/tables/filter_fields", f: filter %>
             <% end %>
           </div>
 
           <div class="row">
             <div class="col-6">
-              <%= link_to_add_association '<i data-feather="plus"></i> Add a filter'.html_safe, f, :filters, class: "btn btn-sm btn-light", partial: "segment/tables/filter_fiels", data: { "association-insertion-node" => "#filters", "association-insertion-method" => "append" } %>
+              <%= link_to_add_association '<i data-feather="plus"></i> Add a filter'.html_safe, f, :filters, class: "btn btn-sm btn-light", partial: "segment/tables/filter_fields", data: { "association-insertion-node" => "#filters", "association-insertion-method" => "append" } %>
             </div>
             <div class="col-6">
               <%= f.submit "Save", class: "btn btn-sm btn-link float-right" %>
