@@ -1,3 +1,3 @@
 Segment::Engine.routes.draw do
-  resources :tables, only: [:create, :destroy]
+  resources :tables, only: [:create, :update, :destroy]
 end

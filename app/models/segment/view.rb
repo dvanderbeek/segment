@@ -1,6 +1,12 @@
 module Segment
   class View < ApplicationRecord
+    COMBINATORS = %w[and or].freeze
+
     has_many :filters
+
+    validates :combinator, inclusion: { in: COMBINATORS }
+
+    accepts_nested_attributes_for :filters, allow_destroy: true
 
     def title
       super || "#{type.demodulize} #{id}"

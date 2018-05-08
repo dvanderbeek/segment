@@ -8,12 +8,21 @@ module Segment
       redirect_to [main_app, :admin, @table.model_klass, view: @table.id], notice: "Table created successfully."
     end
 
+    def update
+      @table.update(permitted_params)
+      redirect_to [main_app, :admin, @table.model_klass, view: @table.id], notice: "Table updated successfully."
+    end
+
     def destroy
       @table.destroy
       redirect_to [main_app, :admin, @table.model_klass], notice: "Table deleted successfully."
     end
 
     private
+
+      def permitted_params
+        params.fetch(:table, {}).permit(:title, :combinator, filters_attributes: [:id, :condition, :value, :_destroy])
+      end
 
       def set_table
         @table = Table.find(params[:id]) if params[:id]
