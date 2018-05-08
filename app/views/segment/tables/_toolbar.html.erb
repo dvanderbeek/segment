@@ -3,12 +3,12 @@
     <%= @view ? @view.title : "All" %>
   </button>
   <div class="dropdown-menu" aria-labelledby="viewsMenu">
-    <%= link_to "All", main_app.send(route_name, view: nil), class: "dropdown-item" %>
+    <%= link_to "All", params.to_unsafe_h.merge({ view: nil }), class: "dropdown-item" %>
     <% Segment::View.where(model: model_name).each do |view| %>
-      <%= link_to view.title, main_app.send(route_name, view: view.id), class: "dropdown-item" %>
+      <%= link_to view.title, params.to_unsafe_h.merge({ view: view.id }), class: "dropdown-item" %>
     <% end %>
     <div class="dropdown-divider"></div>
-    <%= link_to "New View", segment.tables_path(model: model_name, title: "New View"), method: :post, class: "dropdown-item" %>
+    <%= link_to "New View", segment.tables_path(model: model_name), method: :post, class: "dropdown-item" %>
   </div>
 </div>
 
