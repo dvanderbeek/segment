@@ -3,7 +3,7 @@ class CustomersController < ApplicationController
 
   # GET /customers
   def index
-    @customers = if params[:view] && @view = Segment::View.find_by(id: params[:view])
+    @customers = if params[:view] && @view = Segment::View.includes(:filters).find_by(id: params[:view])
       @view.data
     else
       Customer.all

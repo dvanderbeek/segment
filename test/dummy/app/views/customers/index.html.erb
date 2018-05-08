@@ -6,9 +6,9 @@
 </h1>
 
 <div class="list-group">
-  <%= link_to "All", {}, class: "list-group-item" %>
+  <%= link_to "All", customers_path(view: nil), class: "list-group-item" %>
   <% Segment::View.where(model: "Customer").each do |view| %>
-    <%= link_to view.title, {view: view.id}, class: "list-group-item" %>
+    <%= link_to view.title, customers_path(view: view.id), class: "list-group-item" %>
   <% end %>
 </div>
 
