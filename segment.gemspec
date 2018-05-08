@@ -17,6 +17,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 5.2.0"
   s.add_dependency "ransack", "~> 1.8.8"
+  s.add_dependency "cocoon", "~> 1.2"
   # simple form
   # cocoon
 

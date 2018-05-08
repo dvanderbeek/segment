@@ -2,7 +2,7 @@ module Segment
   class View < ApplicationRecord
     COMBINATORS = %w[and or].freeze
 
-    has_many :filters
+    has_many :filters, inverse_of: :view
 
     validates :combinator, inclusion: { in: COMBINATORS }
 
