@@ -2,6 +2,10 @@ module Segment
   class View < ApplicationRecord
     has_many :filters
 
+    def title
+      super || "#{type.demodulize} #{id}"
+    end
+
     def ransack
       @ransack ||= model_klass.ransack(query_with_combinator)
     end
