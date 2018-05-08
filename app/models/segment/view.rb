@@ -8,6 +8,11 @@ module Segment
 
     accepts_nested_attributes_for :filters, allow_destroy: true
 
+    def as(user)
+      @user = user
+      return self
+    end
+
     def title
       super || "#{type.demodulize} #{id}"
     end
@@ -27,8 +32,14 @@ module Segment
     def query
       @query ||= filters.pluck(:condition, :value).inject({}) do |h, filter|
         condition, value = filter[0], filter[1]
-        value = value.split(", ") if condition.ends_with?("_in", "_any", "_all")
-        h[condition] = value
+
+        if value == "current_user_id" && @user
+          value = @user.id
+        elsif condition.ends_with?("_in", "_any", "_all")
+          value = value.split(", ")
+        end
+
+        h[condition] = value unless value == "current_user_id"
         h
       end
     end
