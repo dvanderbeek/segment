@@ -2,10 +2,6 @@ module Segment
   class View < ApplicationRecord
     has_many :filters
 
-    def data
-      @data ||= ransack.result
-    end
-
     def ransack
       @ransack ||= model_klass.ransack(query_with_combinator)
     end
