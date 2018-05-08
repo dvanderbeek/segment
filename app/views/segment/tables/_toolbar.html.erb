@@ -1,0 +1,52 @@
+<div class="dropdown">
+  <button class="btn btn-sm float-left mr-2 btn-light dropdown-toggle" type="button" id="viewsMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <%= @view ? @view.title : "All" %>
+  </button>
+  <div class="dropdown-menu" aria-labelledby="viewsMenu">
+    <%= link_to "All", main_app.send(route_name, view: nil), class: "dropdown-item" %>
+    <% Segment::View.where(model: model_name).each do |view| %>
+      <%= link_to view.title, main_app.send(route_name, view: view.id), class: "dropdown-item" %>
+    <% end %>
+    <div class="dropdown-divider"></div>
+    <%= link_to "New View", segment.tables_path(model: model_name, title: "New View"), method: :post, class: "dropdown-item" %>
+  </div>
+</div>
+
+<% if @view %>
+  <div class="dropdown">
+    <button class="btn btn-sm float-left mr-2 btn-light dropdown-toggle" type="button" id="viewSettingsMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <i data-feather="filter"></i> Filters
+    </button>
+    <div class="dropdown-menu wide" aria-labelledby="viewSettingsMenu">
+      <div class="py-2 px-3">
+        <%= simple_form_for [segment, @view] do |f| %>
+          <%= f.input :title, label: false, input_html: { class: "form-control-sm" } %>
+          <%= f.input :combinator, label: false, input_html: { class: "form-control-sm" }, as: :select, collection: Segment::View::COMBINATORS, include_blank: false %>
+          <div id="filters">
+            <%= f.simple_fields_for :filters do |filter| %>
+              <%= render "filter_fields", f: filter %>
+            <% end %>
+          </div>
+
+          <div class="row">
+            <div class="col-6">
+              <%= link_to_add_association '<i data-feather="plus"></i> Add a filter'.html_safe, f, :filters, class: "btn btn-sm btn-light", partial: "segment/tables/filter_fiels", data: { "association-insertion-node" => "#filters", "association-insertion-method" => "append" } %>
+            </div>
+            <div class="col-6">
+              <%= f.submit "Save", class: "btn btn-sm btn-link float-right" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="dropdown">
+    <button class="btn btn-sm float-left btn-light dropdown-toggle" type="button" id="viewSettingsMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <i data-feather="settings"></i>
+    </button>
+    <div class="dropdown-menu" aria-labelledby="viewSettingsMenu">
+      <%= link_to "Delete View", [segment, @view], method: :delete, class: "dropdown-item", data: { confirm: "Are you sure?" } %>
+    </div>
+  </div>
+<% end %>
