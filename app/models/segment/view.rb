@@ -37,6 +37,8 @@ module Segment
           value = @user.id
         elsif condition.ends_with?("_in", "_any", "_all")
           value = value.split(", ")
+        elsif matches = /\A(\d*).(days|months|years).ago\z/.match(value)
+          value = matches[1].to_i.send(matches[2]).ago.to_date
         end
 
         h[condition] = value unless value == "current_user_id"
