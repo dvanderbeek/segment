@@ -8,6 +8,18 @@ module Segment
 
     accepts_nested_attributes_for :filters, allow_destroy: true
 
+    after_save :ensure_one_default_view
+
+    def self.for_model(model, view_id)
+      if view_id == "all"
+        nil
+      elsif view_id.nil?
+        Segment::View.includes(:filters).find_by(default: true, model: model)
+      else
+        Segment::View.includes(:filters).find_by(id: view_id.to_i, model: model)
+      end
+    end
+
     def as(user)
       @user = user
       return self
@@ -43,6 +55,14 @@ module Segment
 
         h[condition] = value unless value == "current_user_id"
         h
+      end
+    end
+
+    private
+
+    def ensure_one_default_view
+      if default?
+        self.class.where(model: model).where.not(id: id).update_all(default: false)
       end
     end
   end

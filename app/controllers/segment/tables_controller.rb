@@ -21,7 +21,7 @@ module Segment
     private
 
       def permitted_params
-        params.fetch(:table, {}).permit(:title, :combinator, filters_attributes: [:id, :condition, :value, :_destroy])
+        params.fetch(:table, {}).permit(:title, :combinator, :default, filters_attributes: [:id, :condition, :value, :_destroy])
       end
 
       def set_table
