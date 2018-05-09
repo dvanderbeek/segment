@@ -1,0 +1,11 @@
+<div class="row nested-fields">
+  <div class="col-1">
+    <%= link_to_remove_association '<i data-feather="x-circle"></i>'.html_safe, f, class: "btn btn-sm btn-light" %>
+  </div>
+  <div class="col-6">
+    <%= f.input :condition, label: false, input_html: { class: "form-control-sm" } %>
+  </div>
+  <div class="col-5">
+    <%= f.input :value, label: false, input_html: { class: "form-control-sm" } %>
+  </div>
+</div>
