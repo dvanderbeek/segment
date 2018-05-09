@@ -19,8 +19,6 @@ Gem::Specification.new do |s|
   s.add_dependency "ransack", "~> 1.8.8"
   s.add_dependency "cocoon", "~> 1.2"
   s.add_dependency "simple_form", "~> 4.0"
-  # simple form
-  # cocoon
 
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "bootstrap", '~> 4.1.1'
