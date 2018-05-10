@@ -46,8 +46,17 @@
       <i data-feather="settings"></i>
     </button>
     <div class="dropdown-menu" aria-labelledby="viewSettingsMenu">
-      <%= link_to "Make Default", [segment, @view, table: { default: true }], method: :patch, class: "dropdown-item" %>
+      <%= link_to "#{@view.default ? 'Remove' : 'Make'} Default", [segment, @view, table: { default: !@view.default }], method: :patch, class: "dropdown-item" %>
       <%= link_to "Delete View", [segment, @view], method: :delete, class: "dropdown-item", data: { confirm: "Are you sure?" } %>
+    </div>
+  </div>
+<% elsif default_view = Segment::View.find_by(model: model_name, default: true) %>
+  <div class="dropdown">
+    <button class="btn btn-sm float-left btn-light dropdown-toggle" type="button" id="viewSettingsMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <i data-feather="settings"></i>
+    </button>
+    <div class="dropdown-menu" aria-labelledby="viewSettingsMenu">
+      <%= link_to "Make Default", [segment, default_view, table: { default: false }], method: :patch, class: "dropdown-item" %>
     </div>
   </div>
 <% end %>
