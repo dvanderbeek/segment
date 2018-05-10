@@ -49,7 +49,7 @@ module Segment
           value = @user.id
         elsif condition.ends_with?("_in", "_any", "_all")
           value = value.split(", ")
-        elsif matches = /\A(\d*).(day|days|month|months|year|years).ago\z/.match(value)
+        elsif matches = /\A(\d*)[. ](day|days|month|months|year|years)[. ]ago\z/.match(value)
           value = matches[1].to_i.send(matches[2]).ago.to_date
         end
 
