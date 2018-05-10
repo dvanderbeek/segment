@@ -22,7 +22,6 @@
         <%= simple_form_for [segment, @view] do |f| %>
           <%= f.input :title, label: false, input_html: { class: "form-control-sm" } %>
           <%= f.input :combinator, label: false, input_html: { class: "form-control-sm" }, as: :select, collection: Segment::View::COMBINATORS, include_blank: false %>
-          <%= f.input :default %>
           <div id="filters">
             <%= f.simple_fields_for :filters do |filter| %>
               <%= render "segment/tables/filter_fields", f: filter %>
@@ -47,6 +46,7 @@
       <i data-feather="settings"></i>
     </button>
     <div class="dropdown-menu" aria-labelledby="viewSettingsMenu">
+      <%= link_to "Make Default", [segment, @view, table: { default: true }], method: :patch, class: "dropdown-item" %>
       <%= link_to "Delete View", [segment, @view], method: :delete, class: "dropdown-item", data: { confirm: "Are you sure?" } %>
     </div>
   </div>
